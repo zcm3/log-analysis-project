@@ -15,7 +15,7 @@ def main():
     cur.execute(query_1)
     print("The popular articles:")
     for (title, view) in cur.fetchall():
-        print("    {} - {} views".format(title, view))
+        print("    {0:.<40} {1:,} views".format(title, view))
     print("-" * 20)
 
     # Question 2
@@ -29,13 +29,15 @@ def main():
     cur.execute(query_2)
     print("The popular authors:")
     for (name, view) in cur.fetchall():
-        print("    {} - {} views".format(name, view))
+        print("    {0:.<40} {1:,} views".format(name, view))
     print("-" * 20)
 
     # Question 3
     query_3 = """
-    Select date, not_found*100.0/ web_req as error_req_rate
-    from (select  time::date  as daydate , count(*) as web_req
+    Select to_char(date,'FMMonth DD, YYYY'),
+    round(not_found*100.0/ web_req,2)
+    AS error_req_rate
+    from (select time::date as daydate , count(*) as web_req
     from log group by time::date) as traffic ,
     (select  time::date  date, count(*)
     as not_found from log where status != '200 OK' group by date)
@@ -52,6 +54,5 @@ def main():
     cur.close()
     conn.close()
 
-
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()
