@@ -1,6 +1,5 @@
 Logs Analysis Project - Udacity - Full-Stack Web Development Course
 
-
 By Mohammed
 
 Project purpose:
